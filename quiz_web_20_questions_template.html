@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企业在线选择题考试</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f7f7f7;
+    }
+    .question {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .question h3 {
+      margin: 0 0 10px;
+    }
+    .result {
+      background: #e0ffe0;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 6px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>企业知识在线测试</h1>
+  <form id="quizForm">
+    <div id="questionsContainer"></div>
+    <button type="submit">提交答卷</button>
+  </form>
+  <div id="result" class="result"></div>
+
+  <script>
+    const questions = [
+      { question: "第1题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "A", explanation: "解析" },
+      { question: "第2题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "B", explanation: "解析" },
+      { question: "第3题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "C", explanation: "解析" },
+      { question: "第4题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "D", explanation: "解析" },
+      { question: "第5题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "A", explanation: "解析" },
+      { question: "第6题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "B", explanation: "解析" },
+      { question: "第7题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "C", explanation: "解析" },
+      { question: "第8题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "D", explanation: "解析" },
+      { question: "第9题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "A", explanation: "解析" },
+      { question: "第10题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "B", explanation: "解析" },
+      { question: "第11题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "C", explanation: "解析" },
+      { question: "第12题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "D", explanation: "解析" },
+      { question: "第13题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "A", explanation: "解析" },
+      { question: "第14题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "B", explanation: "解析" },
+      { question: "第15题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "C", explanation: "解析" },
+      { question: "第16题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "D", explanation: "解析" },
+      { question: "第17题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "A", explanation: "解析" },
+      { question: "第18题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "B", explanation: "解析" },
+      { question: "第19题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "C", explanation: "解析" },
+      { question: "第20题内容", options: { A: "选项A", B: "选项B", C: "选项C", D: "选项D" }, answer: "D", explanation: "解析" }
+    ];
+
+    const form = document.getElementById('quizForm');
+    const container = document.getElementById('questionsContainer');
+    const resultDiv = document.getElementById('result');
+
+    questions.forEach((q, index) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<h3>第 ${index + 1} 题：${q.question}</h3>` +
+        Object.entries(q.options).map(([key, val]) => `
+          <label><input type="radio" name="q${index}" value="${key}"> ${key}. ${val}</label><br>`
+        ).join('');
+      container.appendChild(div);
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let score = 0;
+      let output = '';
+
+      questions.forEach((q, index) => {
+        const userAnswer = form[`q${index}`].value;
+        const correct = userAnswer === q.answer;
+        if (correct) score++;
+        output += `第${index + 1}题：你的答案是 ${userAnswer}，${correct ? '✔️ 正确' : '❌ 错误'}<br>解析：${q.explanation}<br><br>`;
+      });
+
+      output += `<strong>总得分：${score} / ${questions.length}</strong>`;
+      resultDiv.innerHTML = output;
+      resultDiv.style.display = 'block';
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+  </script>
+</body>
+</html>
